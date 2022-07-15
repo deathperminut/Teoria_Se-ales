@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="csrf-param" content="_csrf">
+<meta name="csrf-token" content="q13MltAlUtnxDaDSVBieNR5YH5GtDMvKceunGb7R7__KFvW7u1c1t7U597kYa-53bDFN5sBLrIQjpP1LzpOAlA==">
+
+        <title>Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE</title>
+    <meta name="robots" content="index, follow">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="¿Cuántas veces obtuvo un modelo con una precisión del 99% que no se puede utilizar? Crear modelos de clasificación no es una broma, especialmente cuando hay un desequilibrio de clases en sus datos. Ya sabes, cuando solo hay un fraude en 1000 transacciones.">
+<meta name="keywords" content="data science, towards data science, machine learning, artificial intelligence, python">
+<meta property="og:description" content="¿Cuántas veces obtuvo un modelo con una precisión del 99% que no se puede utilizar? Crear modelos de clasificación no es una broma, especialmente cuando hay un desequilibrio de clases en sus datos. Ya sabes, cuando solo hay un fraude en 1000 transacciones.">
+<meta property="og:title" content="Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://ichi.pro/assets/images/max/724/1*9NDSXLP81S-jruEcrthXAw.jpeg">
+<meta property="og:url" content="https://ichi.pro/es/como-manejar-sin-esfuerzo-el-desequilibrio-de-clases-con-python-y-smote-170911188182439">
+<meta property="og:site_name" content="ICHI.PRO">
+<meta name="twitter:url" content="https://ichi.pro/es/como-manejar-sin-esfuerzo-el-desequilibrio-de-clases-con-python-y-smote-170911188182439">
+<meta name="twitter:image" content="https://ichi.pro/assets/images/max/724/1*9NDSXLP81S-jruEcrthXAw.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ichi">
+<meta name="twitter:title" content="Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE">
+<meta name="twitter:description" content="¿Cuántas veces obtuvo un modelo con una precisión del 99% que no se puede utilizar? Crear modelos de clasificación no es una broma, especialmente cuando hay un desequilibrio de clases en sus datos. Ya sabes, cuando solo hay un fraude en 1000 transacciones.">
+<link href="https://ichi.pro/es/como-manejar-sin-esfuerzo-el-desequilibrio-de-clases-con-python-y-smote-170911188182439" rel="canonical">
+<link href="https://ichi.pro/python-to-smote-de-kurasu-no-fu-kinko-o-kantan-ni-shorisuru-hoho-170911188182439" rel="alternate" hreflang="ja">
+<link href="https://ichi.pro/de/wie-sie-mit-python-und-smote-muhelos-mit-klassenungleichgewichten-umgehen-konnen-170911188182439" rel="alternate" hreflang="de">
+<link href="https://ichi.pro/fr/comment-gerer-sans-effort-le-desequilibre-de-classe-avec-python-et-smote-170911188182439" rel="alternate" hreflang="fr">
+<link href="https://ichi.pro/th/withi-cadkar-kab-khwam-mi-smdul-khxng-khlas-dwy-python-laea-smote-xyang-ngayday-170911188182439" rel="alternate" hreflang="th">
+<link href="https://ichi.pro/pt/como-lidar-sem-esforco-com-o-desequilibrio-de-classes-com-python-e-smote-170911188182439" rel="alternate" hreflang="pt">
+<link href="https://ichi.pro/ru/kak-legko-spravit-sa-s-disbalansom-klassov-s-pomos-u-python-i-smote-170911188182439" rel="alternate" hreflang="ru">
+<link href="https://ichi.pro/vi/cach-de-dang-xu-ly-su-mat-can-bang-trong-lop-voi-python-va-smote-170911188182439" rel="alternate" hreflang="vi">
+<link href="https://ichi.pro/it/come-gestire-senza-sforzo-lo-squilibrio-di-classe-con-python-e-smote-170911188182439" rel="alternate" hreflang="it">
+<link href="https://ichi.pro/ko/python-mich-smotelo-keullaeseu-bulgyunhyeong-eul-swibge-cheolihaneun-bangbeob-170911188182439" rel="alternate" hreflang="ko">
+<link href="https://ichi.pro/tr/python-ve-smote-ile-sinif-dengesizligini-zahmetsizce-yonetme-170911188182439" rel="alternate" hreflang="tr">
+<link href="https://ichi.pro/id/cara-mudah-menangani-ketidakseimbangan-kelas-dengan-python-dan-smote-170911188182439" rel="alternate" hreflang="id">
+<link href="https://ichi.pro/pl/jak-bez-wysilku-radzic-sobie-z-nierownowaga-klas-za-pomoca-pythona-i-smote-170911188182439" rel="alternate" hreflang="pl">
+<link href="https://ichi.pro/hi/kaise-payathana-aura-smote-ke-satha-asani-se-kaksa-asantulana-ko-niyantrita-karane-ke-li-e-170911188182439" rel="alternate" hreflang="hi">
+<link href="/themes/v1/files/css/ichi/bootstrap.css?1" rel="stylesheet">
+<link href="/themes/v1/files/css/ichi/theme.css?1" rel="stylesheet">
+<link href="/themes/v1/files/css/ichi/style.css?1" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/ichi/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicons/ichi/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicons/ichi/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/favicons/ichi/manifest.json">
+    <link rel="mask-icon" href="/favicons/ichi/safari-pinned-tab.svg">
+    <link rel="shortcut icon" href="/favicons/ichi/favicon.ico">
+    <meta name="msapplication-config" content="/favicons/ichi/browserconfig.xml">
+
+    <meta name="theme-color" content="#00897b">
+    <meta name="msapplication-navbutton-color" content="#00897b">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#00897b">
+            <script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","headline":"Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE","name":"Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE","description":"¿Cuántas veces obtuvo un modelo con una precisión del 99% que no se puede utilizar? Crear modelos de clasificación no es una broma, especialmente cuando hay un desequilibrio de clases en sus datos. Ya sabes, cuando solo hay un fraude en 1000 transacciones.","keywords":"data science, towards data science, machine learning, artificial intelligence, python","url":"https://ichi.pro/python-to-smote-de-kurasu-no-fu-kinko-o-kantan-ni-shorisuru-hoho-170911188182439","sameAs":"https://ichi.pro/python-to-smote-de-kurasu-no-fu-kinko-o-kantan-ni-shorisuru-hoho-170911188182439","image":{"@type":"ImageObject","url":"https://ichi.pro/assets/images/max/724/1*9NDSXLP81S-jruEcrthXAw.jpeg","name":"Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE"},"datePublished":"2020-12-06 00:35:10","dateModified":"2020-12-06 00:35:10"}</script>    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8071954460122741" crossorigin="anonymous"></script>
+    
+
+    </head>
+<body class="hold-transition skin-blue-light layout-top-nav">
+<script>var device = {"isIos":false,"isMobileTablet":false,"isMobileOnly":false,"isTabletOnly":false,"isDesktopOnly":true,"isMobileChrome":false};</script><div class="wrapper">
+    
+<header class="main-header">
+    <nav class="navbar navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="https://ichi.pro/es" class="navbar-brand">
+                    ICHI.PRO                </a>
+                            </div>
+
+            
+        </div>
+    </nav>
+</header>
+
+    <div class="content-wrapper">
+                        
+
+
+<div id="page-view" class="container-fluid padding0">
+    <div class="row gutter">
+        <div class="col-lg-7 col-md-7 col-sm-7">
+
+            <div class="box box-widget">
+                <div class="box-body">
+                    <div class="pull-right">
+                                            </div>
+
+                    <h1 class="text-30 margin0 marginbottom10">
+                        Cómo manejar sin esfuerzo el desequilibrio de clases con Python y SMOTE                    </h1>
+                                        <h2 class="text-20 margin0 marginbottom10 text-muted">
+                        El conjunto de datos con desequilibrio de clases no tiene por qué ser un problema.                    </h2>
+                    
+
+                    <div>
+                        
+                        <div class="display-inline-block">
+                                                                                </div>
+                    </div>
+
+
+                    
+
+                    <div id="page-view-content">
+
+
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-8071954460122741"
+                             data-ad-slot="2289984120"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+
+
+                        <p>¿Cuántas veces obtuvo un modelo con una precisión del 99% que no se puede utilizar? Crear modelos de clasificación no es una broma, especialmente cuando hay un desequilibrio de clases en sus datos. Ya sabes, cuando solo hay un fraude en 1000 transacciones.</p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*9NDSXLP81S-jruEcrthXAw.jpeg" />
+    <figcaption>Foto de Ari He en Unsplash</figcaption>
+</div>
+<p>Verá, identificar 950 de 999 transacciones genuinas es fácil. El truco consiste en identificar correctamente un solo caso de fraude, cada vez.</p>
+<p>¿Leer se siente como una pesadilla? Hay una solución sencilla:</p>
+    <div class="marginbottom10">
+    <div class="embed-responsive embed-responsive-16by9"> 
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/H9wYemw-ZAI"></iframe> 
+    </div>
+</div>
+<p>Ahí es donde SMOTE (Técnica de sobremuestreo de <em>minorías sintéticas</em> ) resulta útil. Puede usarlo para sobremuestrear la clase minoritaria. SMOTE es un tipo de aumento de datos que sintetiza nuevas muestras a partir de las existentes.</p>
+<p>Sí, SMOTE en realidad crea nuevas muestras. Está a años luz de la simple duplicación de la clase minoritaria. Ese enfoque crea estúpidamente "nuevos" puntos de datos al duplicar los existentes. Como resultado, no se trae nueva información al conjunto de datos.</p>
+<p><strong>Pero, ¿cómo lo hace SMOTE?</strong></p>
+<p>Selecciona muestras de la clase minoritaria que están cerca y luego traza líneas entre ellas. Los nuevos puntos de muestra se encuentran en estas líneas.</p>
+<p>Para ser más precisos, se elige una muestra aleatoria y luego se usa un algoritmo KNN para seleccionar vecinos a los que se dibujan las líneas. Con este procedimiento, puede crear tantas muestras sintéticas como necesite. Esto hace que SMOTE sea perfecto para conjuntos de datos de todos los tamaños.</p>
+<p>El único inconveniente real es que los ejemplos sintéticos se crean sin "consultar" a la clase mayoritaria. Esto podría resultar en muestras superpuestas en ambas clases.</p>
+<p>Esa es la única teoría que necesitará para comprender este artículo.</p>
+<p>Estos son los temas que se tratan a continuación:</p>
+<ul><li>Carga y preparación de conjuntos de datos</li>
+<li>Aprendizaje automático sin SMOTE</li>
+<li>Aprendizaje automático con SMOTE</li>
+<li>Conclusión</li>
+</ul>
+<p>Por lo tanto, necesita un conjunto de datos de clasificación que sufra un problema de desequilibrio de clases. Algo como la detección de fraudes con tarjetas de crédito debería funcionar. <a href="https://www.kaggle.com/dark06thunder/credit-card-dataset" ref="nofollow" target="_blank">Aquí</a> tienes uno de Kaggle que puedes descargar gratis.</p>
+<p>He aquí cómo cargarlo con Python:</p>
+    <p><script src='https://gist.github.com/betterdatascience/2c48a5e996fdd5c6f89fe5162fec6c64.js'></script></p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*kYRvtMIxnCPoYFsYn5HkaA.png" />
+    <figcaption>Imagen 1 - Jefe de conjunto de datos de fraude con tarjetas de crédito (imagen del autor)</figcaption>
+</div>
+<p>Hay veinte y tantos columnas que preparará en un momento. Primero, exploremos la distribución de la clase objetivo:</p>
+    <p><script src='https://gist.github.com/betterdatascience/06667a7e7018b1659bfc12617c46b409.js'></script></p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*pYssM3JU3uD-1ApfQDf7Iw.png" />
+    <figcaption>Imagen 2 - Distribución de clases de variables de destino (imagen del autor)</figcaption>
+</div>
+<p>¡Ay! Solo alrededor del 1,68% de las transacciones se clasifican como fraude. Una gran receta para hacer modelos de <strong>baja recuperación de alta precisión</strong> . Más sobre esto en un momento.</p>
+<p>No puede pasar un conjunto de datos a un algoritmo de aprendizaje automático de esta forma. Un poco de preparación es imprescindible.</p>
+<h1>Preparación de datos</h1>
+<p>No pasarás mucho tiempo aquí. El objetivo es obtener un conjunto de datos mínimo viable para el aprendizaje automático.</p>
+<p>Aquí está la lista de cambios iniciales:</p>
+<ul><li>Reasignar <code>gender</code>, <code>car</code>y <code>reality</code>a enteros (0, 1): estas columnas solo tienen dos valores posibles</li>
+<li>Crear variables ficticias para <code>income_type</code>, <code>education_type</code>, <code>family_name</code>, <code>house_type</code>- para pasar de cadenas a binario (0, 1)</li>
+<li>Elimine las columnas innecesarias - <code>Unnamed: 0</code>, <code>ID</code>y todas las columnas para las que creó variables ficticias</li>
+<li>Combinar todo en un solo marco de datos</li>
+</ul>
+    <p><script src='https://gist.github.com/betterdatascience/fe2a856b33a25e9bcf630e8b243f8d47.js'></script></p>
+<p>El conjunto de datos ahora se ve así:</p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*pTHlknbYdCcYCV5cMQ1L7w.png" />
+    <figcaption>Imagen 3 - Conjunto de datos después de la preparación inicial (imagen del autor)</figcaption>
+</div>
+<p>Mejor, pero todavía necesita un poco de trabajo. Observe cuán mayores son los valores en <code>income</code>que en <code>no_of_child</code>. Eso es lo esperado, pero los algoritmos de aprendizaje automático darán más importancia a las variables a mayor escala. Presentamos <strong>el escalado de datos</strong> .</p>
+<p>Utilizará <code>MinMaxScaler</code>de <code>scikit-learn</code>para escalar columnas que tengan valores superiores a 1 en el rango [0, 1]. Aquí 'cómo:</p>
+    <p><script src='https://gist.github.com/betterdatascience/d496ef8a903aa435c9d820c23f49ae56.js'></script></p>
+<p>Así es como se ve el conjunto de datos ahora:</p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*OpoFJlR77jgBY47QA19DKQ.png" />
+    <figcaption>Imagen 4: conjunto de datos después de escalar (imagen del autor)</figcaption>
+</div>
+<p>Mucho mejor: todo está en el rango [0, 1], todas las columnas son numéricas y no faltan valores.</p>
+<p>Esto significa una cosa: el conjunto de datos está listo para el aprendizaje automático.</p>
+<h1>Aprendizaje automático sin SMOTE</h1>
+<p>Comencemos con un enfoque ingenuo. Creará un modelo de bosque aleatorio en el conjunto de datos e ignorará por completo el desequilibrio de clases.</p>
+<p>Para comenzar, tendrá que dividir el conjunto de datos en partes de entrenamiento y prueba. Solo hay un 1,68% de las transacciones fraudulentas en todo el conjunto de datos. Idealmente, desea que el porcentaje sea aproximadamente el mismo en el tren y en los conjuntos de prueba.</p>
+<p>A continuación, le indicamos cómo dividir y verificar el porcentaje de la clase positiva:</p>
+    <p><script src='https://gist.github.com/betterdatascience/38e0babc4b07b9c673293d3effd490ca.js'></script></p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*TtmPaw_64TclfMksIqZshQ.png" />
+    <figcaption>Imagen 5 - Porcentaje de clase positiva en trenes y conjuntos de prueba (imagen del autor)</figcaption>
+</div>
+<p>En el modelaje ahora. Hagámoslo lo más simple posible. Entrenarás un clasificador de Random Forest en el set de trenes y lo evaluarás en el set de prueba. La matriz de confusión, la puntuación de precisión y la puntuación de recuerdo le dirán qué tan malo es:</p>
+    <p><script src='https://gist.github.com/betterdatascience/fce005a465a9c6f04e109e8e09f93fdc.js'></script></p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*BfZB4HFzYqndTKd8GwUTwQ.png" />
+    <figcaption>Imagen 6: matriz de precisión, recuperación y confusión de un modelo sin usar SMOTE (imagen del autor)</figcaption>
+</div>
+<p><strong>El modelo tiene una precisión del 98%, así que ¿dónde está el problema?</strong></p>
+<p>Sí, puede clasificar correctamente casi todas las transacciones genuinas. Pero también clasificó el 91% de las transacciones fraudulentas como genuinas. En pocas palabras, el modelo es inutilizable.</p>
+<p>El desequilibrio de clases mató su desempeño. SMOTE puede ayudar.</p>
+<h1>Aprendizaje automático con SMOTE</h1>
+<p>Ya sabes qué es SMOTE, y ahora verás cómo instalarlo y usarlo. Ejecute el siguiente comando desde la Terminal:</p>
+<p></p><pre><code>pip install imbalanced-learn
+</code></pre><p></p>
+    <p><script src='https://gist.github.com/betterdatascience/34171f83ddd9c8eba71e121c05b0a429.js'></script></p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*3bzpxDLEi2ngCuz_s57dJQ.png" />
+    <figcaption>Imagen 7 - Formas y equilibrio de clases después de aplicar SMOTE (imagen del autor)</figcaption>
+</div>
+<p>Hay 37.000 puntos de datos en lugar de 25.000 y el equilibrio de clases es perfecto: 50:50. A continuación, entrenará el modelo en un nuevo conjunto de datos:</p>
+    <p><script src='https://gist.github.com/betterdatascience/943db4de013b8c38572f72afbf562871.js'></script></p>
+<div class="marginbottom10 margintop10">
+    <img class="img-responsive center-block" src="https://ichi.pro/assets/images/max/724/1*owwRWDr5_30h_xcfCh9jBA.png" />
+    <figcaption>Imagen 8 - Matriz de precisión, recuperación y confusión de un modelo después de usar SMOTE (imagen del autor)</figcaption>
+</div>
+<p>El modelo resultante es utilizable, por decir lo menos. SMOTE hizo su trabajo y dio como resultado un modelo que superó significativamente a su versión anterior.</p>
+<p>Resumamos las cosas a continuación.</p>
+<h1>Conclusión</h1>
+<p>Y ahí lo tienes: SMOTE en pocas palabras. Puede usarlo siempre que un conjunto de datos sufra un problema de desequilibrio de clases. El método de referencia hoy en día es utilizar tanto el submuestreo como el sobremuestreo, pero ese es un tema para otro momento.</p>
+<p>Solo por diversión, puede comparar las clasificaciones erróneas de ambos modelos. Al hacerlo, podría ver si el modelo creado después del sobremuestreo aún clasifica erróneamente los mismos puntos de datos.</p>
+<p><em>¿Cómo maneja el desequilibrio de clases? </em>Déjame saber abajo en los comentarios.</p>
+<h2><a href="https://mailchi.mp/46a3d2989d9b/bdssubscribe" ref="nofollow" target="_blank">Únase a mi lista de correo electrónico privada para obtener más información útil.</a></h2>
+                        <div id="M673448ScriptRootC1252277"></div>
+                        <script src="https://jsc.mgid.com/i/c/ichi.pro.1252277.js" async></script>
+                    </div>
+
+
+                </div>
+                            </div>
+
+
+            
+            
+            
+                        <div class="margintop20">
+                <div class="padding10">
+                    <h3 class="margin0">Suggested posts</h3>
+                </div>
+                <div class="row">
+                                    <div class="col-xs-6">
+                        
+<div class="box box-widget">
+    <div class="box-body">
+        <h3><a class="display-block" href="https://ichi.pro/es/que-es-la-conciencia-la-metafora-de-la-llama-165172393581343">Qué es la conciencia: la metáfora de la llama</a></h3>
+        
+        
+        <p>
+            ¿Qué es la conciencia? Es una pregunta que ha intrigado a filósofos y científicos durante siglos. Algunos dicen que es algo efímero que no podemos entender genuinamente, independientemente de nuestros cuerpos.        </p>
+
+    </div>
+
+    </div>
+                    </div>
+                                    <div class="col-xs-6">
+                        
+<div class="box box-widget">
+    <div class="box-body">
+        <h3><a class="display-block" href="https://ichi.pro/es/que-paquete-de-raspado-web-de-python-es-el-mejor-75857919705">¿Qué paquete de raspado web de Python es el mejor?</a></h3>
+                    <h4>2022, otro año, otro ajetreo lateral. ¿Por qué no codificar el tuyo esta vez?</h4>
+        
+                    <a class="display-block margintop10 marginbottom10" title="¿Qué paquete de raspado web de Python es el mejor?" href="https://ichi.pro/es/que-paquete-de-raspado-web-de-python-es-el-mejor-75857919705">
+
+
+                
+                    <div class="position-relative">
+                        <img class="img-responsive center-block_" src="https://ichi.pro/assets/images/max/640/1*eB_8XxkK0Etps1wqi_aVog.jpeg" alt="¿Qué paquete de raspado web de Python es el mejor?" />
+                    </div>
+
+                
+            </a>
+        
+        <p>
+            Descargo de responsabilidad: este artículo es solo para fines educativos. No alentamos a nadie a raspar sitios web, especialmente aquellas propiedades web que pueden tener términos y condiciones contra tales acciones.        </p>
+
+    </div>
+
+    </div>
+                    </div>
+                                </div>
+            </div>
+            
+
+        </div>
+
+        <div class="col-lg-5 col-md-5 col-sm-5 margintop10-xs margintop10-sm">
+
+            
+                                <div class="padding10">
+                    <h3 class="margin0">Related posts</h3>
+                </div>
+                                        
+<div class="box box-widget">
+    <div class="box-body">
+        <h3><a class="display-block" href="https://ichi.pro/es/incompatible-el-problema-de-crear-un-archivo-shapefile-de-devolucion-de-precinto-nacional-277174168059796">Incompatible: el problema de crear un archivo Shapefile de devolución de precinto nacional</a></h3>
+        
+                    <a class="display-block margintop10 marginbottom10" title="Incompatible: el problema de crear un archivo Shapefile de devolución de precinto nacional" href="https://ichi.pro/es/incompatible-el-problema-de-crear-un-archivo-shapefile-de-devolucion-de-precinto-nacional-277174168059796">
+
+
+                
+                    <div class="position-relative">
+                        <img class="img-responsive center-block_" src="https://ichi.pro/assets/images/max/640/1*U5N5khtMXJKrbO5Sazxhbw.jpeg" alt="Incompatible: el problema de crear un archivo Shapefile de devolución de precinto nacional" />
+                    </div>
+
+                
+            </a>
+        
+        <p>
+            Escrito por Jesse Clark, investigador graduado del MIT Election Lab y Ph.D.        </p>
+
+    </div>
+
+    </div>
+                                        
+<div class="box box-widget">
+    <div class="box-body">
+        <h3><a class="display-block" href="https://ichi.pro/es/prediccion-de-la-calidad-del-aire-hiperlocal-mediante-aprendizaje-automatico-260835076971121">Predicción de la calidad del aire hiperlocal mediante aprendizaje automático</a></h3>
+                    <h4>Introducción</h4>
+        
+                    <a class="display-block margintop10 marginbottom10" title="Predicción de la calidad del aire hiperlocal mediante aprendizaje automático" href="https://ichi.pro/es/prediccion-de-la-calidad-del-aire-hiperlocal-mediante-aprendizaje-automatico-260835076971121">
+
+
+                
+                    <div class="position-relative">
+                        <img class="img-responsive center-block_" src="https://ichi.pro/assets/images/max/640/1*spvpjEasT2GVF1lES4UCCQ.png" alt="Predicción de la calidad del aire hiperlocal mediante aprendizaje automático" />
+                    </div>
+
+                
+            </a>
+        
+        <p>
+            Predecir la calidad del aire en Oakland, CA, utilizando datos disponibles públicamente Cuando Google y EDF publicaron su estudio sobre el mapeo de la contaminación del aire en Oakland, los resultados de este estudio ganaron mucha atención. Los datos que publicaron fue uno de los primeros conjuntos de datos que mostraron cómo la calidad del aire variaba según las cuadras de la ciudad en el este y oeste de Oakland.        </p>
+
+    </div>
+
+    </div>
+                                        
+<div class="box box-widget">
+    <div class="box-body">
+        <h3><a class="display-block" href="https://ichi.pro/es/un-marco-para-interpretar-el-valor-economico-obtenido-de-los-proyectos-de-ciencia-de-datos-99616731430857">Un marco para interpretar el valor económico obtenido de los proyectos de ciencia de datos</a></h3>
+                    <h4>Parte I: VPN, TIR, PI</h4>
+        
+                    <a class="display-block margintop10 marginbottom10" title="Un marco para interpretar el valor económico obtenido de los proyectos de ciencia de datos" href="https://ichi.pro/es/un-marco-para-interpretar-el-valor-economico-obtenido-de-los-proyectos-de-ciencia-de-datos-99616731430857">
+
+
+                
+                    <div class="position-relative">
+                        <img class="img-responsive center-block_" src="https://ichi.pro/assets/images/max/640/1*-pPV8Vy9vyH7ZXsmBctGwg.png" alt="Un marco para interpretar el valor económico obtenido de los proyectos de ciencia de datos" />
+                    </div>
+
+                
+            </a>
+        
+        <p>
+            Escrito con Daniel Fleck y David Lubert El primer blog de nuestra serie se centrará en utilizar el valor actual neto (VPN), la tasa interna de rendimiento (TIR) ​​y el índice de rentabilidad (PI) para evaluar un proyecto de ciencia de datos de forma adecuada. También discutiremos cómo la utilización de una metodología de ciencia de datos puede refinar aún más las entradas de estas mismas métricas económicas para desarrollar evaluaciones de mayor calidad.        </p>
+
+    </div>
+
+    </div>
+                                        
+<div class="box box-widget">
+    <div class="box-body">
+        <h3><a class="display-block" href="https://ichi.pro/es/matematicas-esenciales-para-la-ciencia-de-datos-base-y-cambio-de-base-272331583312995">Matemáticas esenciales para la ciencia de datos: base y cambio de base</a></h3>
+        
+                    <a class="display-block margintop10 marginbottom10" title="Matemáticas esenciales para la ciencia de datos: base y cambio de base" href="https://ichi.pro/es/matematicas-esenciales-para-la-ciencia-de-datos-base-y-cambio-de-base-272331583312995">
+
+
+                
+                    <div class="position-relative">
+                        <img class="img-responsive center-block_" src="https://ichi.pro/assets/images/max/640/1*lSqjTbKv5yLngqsR-3XUxg.jpeg" alt="Matemáticas esenciales para la ciencia de datos: base y cambio de base" />
+                    </div>
+
+                
+            </a>
+        
+        <p>
+            Comprender el concepto de base del álgebra lineal útil para la descomposición propia y la SVD En este artículo, aprenderá sobre el concepto de base, que es una forma interesante de comprender los métodos de factorización matricial como la descomposición propia o la descomposición de valores singulares (SVD). Definiciones La base es un sistema de coordenadas utilizado para describir espacios vectoriales (conjuntos de vectores).        </p>
+
+    </div>
+
+    </div>
+                                
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+    
+
+
+<footer class="container-fluid">
+
+    <div class="margintop20 marginbottom20">
+        <strong>
+            
+            2020 - 2022            <a class="text-333" href="https://ichi.pro/">
+                ICHI.PRO            </a>
+        </strong>
+    </div>
+
+</footer></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/assets/6c104152/yii.js"></script>
+<script src="/themes/v1/files/js/theme.options.js"></script>
+<script src="/themes/files/themes/admin/dist/js/app.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
+<script src="/themes/v1/files/js/functions.js?1"></script>
+<script src="/themes/v1/files/js/init.js?1"></script>
+
+<script>
+    // Function called if AdBlock is detected
+    function adBlockDetected() {
+        // console.log('adBlockDetected');
+
+        setInterval(function(){
+
+            var ad = document.querySelector("ins.adsbygoogle");
+            var blocked = ad && ad.innerHTML.replace(/\s/g, "").length == 0;
+
+
+            if(blocked && !document.getElementById('notify-adblock')){
+                var body = document.getElementsByTagName("body")[0];
+
+                var parser = new DOMParser();
+                var htmlStr = "<div id=\"notify-adblock\" style=\"\n" +
+                    "    -webkit-animation: fadeIn 500ms ease-out 0s 1 normal forwards;\n" +
+                    "    -o-animation: fadeIn 500ms ease-out 0s 1 normal forwards;\n" +
+                    "    animation: fadeIn 500ms ease-out 0s 1 normal forwards;\n" +
+                    "    background: rgba(0,0,0,0.65);\n" +
+                    "    position: fixed;\n" +
+                    "    top: 0;\n" +
+                    "    left: 0;\n" +
+                    "    width: 100%;\n" +
+                    "    height: 100%;\n" +
+                    "    z-index: 999999;\n" +
+                    "    text-align: center;\n" +
+                    "\">\n" +
+                    "        <div style=\"\n" +
+                    "        margin: 5%;\n" +
+                    "    font-size: 20px;\n" +
+                    "    background-color: #fff;\n" +
+                    "    height: 90%;\n" +
+                    "    display: flex;\n" +
+                    "    justify-content: center;\n" +
+                    "    align-items: center;\n" +
+                    "\">\n" +
+                    "            <div>Our website is made possible by displaying online advertisements to our visitors.\n" +
+                    "            <br />\n" +
+                    "            Please consider supporting us by <b>disabling</b> your <b style=\"color: red\">ad blocker</b>.\n" +
+                    "            <br />\n" +
+                    "            <br />\n" +
+                    "            Disable ad blocker first and\n" +
+                    "            <a class=\"btn btn-primary btn-lg\" href=\"javascript:window.location.reload()\"><i class=\"fa fa-refresh\"></i> Refresh Page</a>\n" +
+                    "        </div></div>\n" +
+                    "    </div>";
+                doc = parser.parseFromString(htmlStr, "text/html");
+                body.insertBefore(doc.getElementById('notify-adblock'), body.firstChild);
+            }
+        }, 3000);
+    }
+
+    adBlockDetected();
+</script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23576931-68"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-23576931-68');
+    </script>
+
+    
+
+
+</body>
+</html>

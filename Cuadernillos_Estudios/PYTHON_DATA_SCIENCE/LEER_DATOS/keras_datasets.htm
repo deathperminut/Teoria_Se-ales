@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Keras documentation">
+  <meta name="author" content="Keras Team">
+  <link rel="shortcut icon" href="https://keras.io/img/favicon.ico">
+
+  <!-- Social -->
+  <meta property="og:title" content="Keras documentation: Datasets">
+  <meta property="og:image" content="https://keras.io/img/logo-k-keras-wb.png">
+  <meta name="twitter:title" content="Keras documentation: Datasets">
+  <meta name="twitter:image" content="https://keras.io/img/k-keras-social.png">
+  <meta name="twitter:card" content="summary">
+
+  <title>Datasets</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/docs.css" rel="stylesheet">
+  <link href="/css/monokai.css" rel="stylesheet">
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</head>
+
+<body>
+
+  <div class='k-page'>
+  
+    <div class="k-nav" id="nav-menu">
+      <a href='/'><img src='/img/logo-small.png' class='logo-small' /></a>
+      <span class="gh-btn-container">
+        <a class="github-button" href="https://github.com/keras-team/keras" data-size="large" data-show-count="true" aria-label="Star keras-team/keras on GitHub">Star</a>
+      </span>
+      <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+
+        
+          <a class="nav-link" href="/about/" role="tab" aria-selected="">About Keras</a>
+          
+        
+          <a class="nav-link" href="/getting_started/" role="tab" aria-selected="">Getting started</a>
+          
+        
+          <a class="nav-link" href="/guides/" role="tab" aria-selected="">Developer guides</a>
+          
+        
+          <a class="nav-link active" href="/api/" role="tab" aria-selected="">Keras API reference</a>
+          
+            
+              <a class="nav-sublink" href="/api/models/">Models API</a>
+            
+              <a class="nav-sublink" href="/api/layers/">Layers API</a>
+            
+              <a class="nav-sublink" href="/api/callbacks/">Callbacks API</a>
+            
+              <a class="nav-sublink" href="/api/optimizers/">Optimizers</a>
+            
+              <a class="nav-sublink" href="/api/metrics/">Metrics</a>
+            
+              <a class="nav-sublink" href="/api/losses/">Losses</a>
+            
+              <a class="nav-sublink" href="/api/data_loading/">Data loading</a>
+            
+              <a class="nav-sublink active" href="/api/datasets/">Built-in small datasets</a>
+            
+              <a class="nav-sublink" href="/api/applications/">Keras Applications</a>
+            
+              <a class="nav-sublink" href="/api/mixed_precision/">Mixed precision</a>
+            
+              <a class="nav-sublink" href="/api/utils/">Utilities</a>
+            
+              <a class="nav-sublink" href="/api/keras_tuner/">KerasTuner</a>
+            
+              <a class="nav-sublink" href="/api/keras_cv/">KerasCV</a>
+            
+              <a class="nav-sublink" href="/api/keras_nlp/">KerasNLP</a>
+            
+          
+        
+          <a class="nav-link" href="/examples/" role="tab" aria-selected="">Code examples</a>
+          
+        
+          <a class="nav-link" href="/why_keras/" role="tab" aria-selected="">Why choose Keras?</a>
+          
+        
+          <a class="nav-link" href="/governance/" role="tab" aria-selected="">Community & governance</a>
+          
+        
+          <a class="nav-link" href="/contributing/" role="tab" aria-selected="">Contributing to Keras</a>
+          
+        
+          <a class="nav-link" href="/keras_tuner/" role="tab" aria-selected="">KerasTuner</a>
+          
+        
+          <a class="nav-link" href="/keras_cv/" role="tab" aria-selected="">KerasCV</a>
+          
+        
+          <a class="nav-link" href="/keras_nlp/" role="tab" aria-selected="">KerasNLP</a>
+          
+        
+
+      </div>
+
+    </div>
+
+    <div class='k-main'>
+      
+      <div class='k-main-top'>
+        <script>
+          function displayDropdownMenu() {
+            e = document.getElementById("nav-menu");
+            if (e.style.display == "block") {
+              e.style.display = "none";
+            }
+            else {
+              e.style.display = "block";
+              document.getElementById("dropdown-nav").style.display = "block";
+            }
+          }
+
+          function resetMobileUI() {
+            if (window.innerWidth <= 840) {
+              document.getElementById("nav-menu").style.display = "none";
+              document.getElementById("dropdown-nav").style.display = "block";
+            }
+            else {
+              document.getElementById("nav-menu").style.display = "block";
+              document.getElementById("dropdown-nav").style.display = "none";
+            }
+          }
+
+          window.onresize = resetMobileUI;
+        </script>
+        <div id='dropdown-nav' onclick="displayDropdownMenu();">
+          <svg viewBox="-20 -20 120 120" width="60" height="60">
+            <rect width="100" height="20"></rect>
+            <rect y="30" width="100" height="20"></rect>
+            <rect y="60" width="100" height="20"></rect>
+          </svg>
+        </div>
+
+        <form class="bd-search d-flex align-items-center k-search-form" id="search-form">
+          <input type="search" class="k-search-input" id="search-input" placeholder="Search Keras documentation..." aria-label="Search Keras documentation..." autocomplete="off">
+            <button class="k-search-btn">
+              <svg width="13" height="13" viewBox="0 0 13 13"><title>search</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg>
+            </button>
+        </form>
+        <script>
+          var form = document.getElementById('search-form');
+          form.onsubmit = function(e) {
+            e.preventDefault();
+            var query = document.getElementById('search-input').value;
+            window.location.href = '/search.html?query=' + query;
+            return False
+          }
+        </script>
+
+      </div>
+      <div class='k-main-inner'>
+        <div class='k-location-slug'>
+            » 
+                <a href='/api'>Keras API reference</a> /
+               Datasets
+        </div>
+        <div class='k-content'>
+          <h1 id="datasets">Datasets</h1>
+<p>The <a href="https://www.tensorflow.org/api_docs/python/tf/keras/datasets"><code>tf.keras.datasets</code></a> module provide a few toy datasets (already-vectorized, in Numpy format)
+that can be used for debugging a model or creating simple code examples.</p>
+<p>If you are looking for larger &amp; more useful ready-to-use datasets, take a look at
+<a href="https://github.com/tensorflow/datasets">TensorFlow Datasets</a>.</p>
+<h2 id="available-datasets">Available datasets</h2>
+<h3 id="mnist-digits-classification-dataset"><a href="/api/datasets/mnist">MNIST digits classification dataset</a></h3>
+<ul>
+<li><a href="/api/datasets/mnist/#load_data-function">load_data function</a></li>
+</ul>
+<h3 id="cifar10-small-images-classification-dataset"><a href="/api/datasets/cifar10">CIFAR10 small images classification dataset</a></h3>
+<ul>
+<li><a href="/api/datasets/cifar10/#load_data-function">load_data function</a></li>
+</ul>
+<h3 id="cifar100-small-images-classification-dataset"><a href="/api/datasets/cifar100">CIFAR100 small images classification dataset</a></h3>
+<ul>
+<li><a href="/api/datasets/cifar100/#load_data-function">load_data function</a></li>
+</ul>
+<h3 id="imdb-movie-review-sentiment-classification-dataset"><a href="/api/datasets/imdb">IMDB movie review sentiment classification dataset</a></h3>
+<ul>
+<li><a href="/api/datasets/imdb/#load_data-function">load_data function</a></li>
+<li><a href="/api/datasets/imdb/#get_word_index-function">get_word_index function</a></li>
+</ul>
+<h3 id="reuters-newswire-classification-dataset"><a href="/api/datasets/reuters">Reuters newswire classification dataset</a></h3>
+<ul>
+<li><a href="/api/datasets/reuters/#load_data-function">load_data function</a></li>
+<li><a href="/api/datasets/reuters/#get_word_index-function">get_word_index function</a></li>
+</ul>
+<h3 id="fashion-mnist-dataset-an-alternative-to-mnist"><a href="/api/datasets/fashion_mnist">Fashion MNIST dataset, an alternative to MNIST</a></h3>
+<ul>
+<li><a href="/api/datasets/fashion_mnist/#load_data-function">load_data function</a></li>
+</ul>
+<h3 id="boston-housing-price-regression-dataset"><a href="/api/datasets/boston_housing">Boston Housing price regression dataset</a></h3>
+<ul>
+<li><a href="/api/datasets/boston_housing/#load_data-function">load_data function</a></li>
+</ul>
+        </div>
+        
+        <div class='k-outline'>
+          
+            <div class='k-outline-depth-1'>
+              
+              <a href='#datasets'>Datasets</a>
+            </div>
+          
+            <div class='k-outline-depth-2'>
+              ▻
+              <a href='#available-datasets'>Available datasets</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#mnist-digits-classification-dataset'>MNIST digits classification dataset</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#cifar10-small-images-classification-dataset'>CIFAR10 small images classification dataset</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#cifar100-small-images-classification-dataset'>CIFAR100 small images classification dataset</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#imdb-movie-review-sentiment-classification-dataset'>IMDB movie review sentiment classification dataset</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#reuters-newswire-classification-dataset'>Reuters newswire classification dataset</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#fashion-mnist-dataset-an-alternative-to-mnist'>Fashion MNIST dataset, an alternative to MNIST</a>
+            </div>
+          
+            <div class='k-outline-depth-3'>
+              
+              <a href='#boston-housing-price-regression-dataset'>Boston Housing price regression dataset</a>
+            </div>
+          
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
